@@ -2,7 +2,7 @@ import { InferAttributes, InferCreationAttributes, Model } from 'sequelize';
 import { Roles } from '../consts/common.js';
 
 export interface IUser {
-  id: number;
+  id?: number;
   email: string;
   password: string;
   username: string;

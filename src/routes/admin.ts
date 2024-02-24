@@ -38,7 +38,23 @@ adminRouter.patch(
     try {
       const body = req.body;
       const updatedUser = await AdminService.updateUser(body);
-      res.send(200).send({});
+      res.status(200).send({});
+    } catch (e) {
+      console.log(e);
+      res.status(500).send({ message: 'Ошибка на сервере' });
+    }
+  }
+);
+
+adminRouter.get(
+  '/api/admin/getById/:id',
+  async (req: Request<{ id: string }>, res) => {
+    try {
+      const id = req.params.id;
+      const user = await AdminService.getUserById(+id);
+      if (user) {
+        res.status(200).send(JSON.stringify(user));
+      }
     } catch (e) {
       console.log(e);
       res.status(500).send({ message: 'Ошибка на сервере' });

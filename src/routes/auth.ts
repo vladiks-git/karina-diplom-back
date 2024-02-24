@@ -18,7 +18,7 @@ authRouter.post(
           res.status(401).send({ message: 'Неверный логин или пароль' });
           return;
         }
-        // тут юзер авторизирован
+        res.status(200).send(JSON.stringify(currentUser));
         return;
       }
       res.status(401).send({ message: 'Неверный логин или пароль' });
