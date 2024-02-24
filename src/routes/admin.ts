@@ -61,3 +61,20 @@ adminRouter.get(
     }
   }
 );
+
+adminRouter.post(
+  '/api/admin/delete',
+  async (req: Request<any, any, { id: number }>, res) => {
+    try {
+      const id = req.body.id;
+      const user = await AdminService.getUserById(id);
+      if (user) {
+        await user.destroy();
+        res.status(200).send({});
+      }
+    } catch (e) {
+      console.log(e);
+      res.status(500).send({ message: 'Ошибка на сервере' });
+    }
+  }
+);
