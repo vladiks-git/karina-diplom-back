@@ -23,8 +23,8 @@ app.use(projectManagerRouter);
 connectDataBase();
 (async () => {
   try {
-    await sequelize.sync({ force: true });
-    // await sequelize.sync();
+    // await sequelize.sync({ force: true });
+    await sequelize.sync();
     // await UserService.createAdmin();
     // await UserService.createStudent();
     // await UserService.createResponsible();

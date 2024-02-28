@@ -35,6 +35,10 @@ const getTasksByProjectId = (id: number) => {
   return TaskModel.findAll({ where: { projectId: id } });
 };
 
+const getTaskById = (id: number) => {
+  return TaskModel.findOne({ where: { id: id } });
+};
+
 export const ProjectManagerService = {
   getAllProjects,
   getCounterpartyById,
@@ -44,4 +48,5 @@ export const ProjectManagerService = {
   getAllCounterparties,
   getProjectById,
   getTasksByProjectId,
+  getTaskById,
 };

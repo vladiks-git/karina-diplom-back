@@ -115,7 +115,7 @@ projectManagerRouter.post(
   }
 );
 
-// редактирование проекта
+// получение проекта по ид
 projectManagerRouter.get(
   '/api/manager/projects/:id',
   async (req: Request<{ id: string }>, res) => {
@@ -126,6 +126,7 @@ projectManagerRouter.get(
         const tasksByProjectId =
           await ProjectManagerService.getTasksByProjectId(project.id);
         const mappedTasks = tasksByProjectId.map((task) => task.dataValues);
+        console.log(mappedTasks);
         res.status(200).send(
           JSON.stringify({
             ...project.dataValues,
@@ -134,6 +135,67 @@ projectManagerRouter.get(
         );
       } else {
         res.status(500).send({ message: 'Проект не найден' });
+      }
+    } catch (e) {
+      console.log(e);
+      res.status(500).send({ message: 'Ошибка на сервере' });
+    }
+  }
+);
+
+interface IUpdateProject extends IProject {
+  tasks: ITask[];
+}
+
+// редактирование проекта
+projectManagerRouter.post(
+  '/api/manager/update',
+  async (req: Request<any, any, IUpdateProject>, res) => {
+    try {
+      //собираем новые данные
+      const body = req.body;
+      const updatedProject: IProject = {
+        counterpartyId: body.counterpartyId,
+        status: body.status,
+        name: body.name,
+        employerId: body.employerId,
+      };
+      const tasks = body.tasks;
+
+      if (body.id) {
+        // обновляем проект
+        const findedProject = await ProjectManagerService.getProjectById(
+          body.id
+        );
+        if (findedProject) {
+          await findedProject.update({
+            ...updatedProject,
+          });
+        }
+        // обновляем таски
+        for (const task of tasks) {
+          if (task.id) {
+            const findedTask = await ProjectManagerService.getTaskById(task.id);
+            if (findedTask) {
+              await findedTask.update({
+                projectId: task.projectId,
+                name: task.name,
+                isDone: task.isDone,
+                endDate: task.endDate,
+                description: task.description,
+              });
+            }
+          } else {
+            await ProjectManagerService.saveTask({
+              projectId: body.id,
+              name: task.name,
+              isDone: task.isDone,
+              endDate: task.endDate,
+              description: task.description,
+            });
+          }
+        }
+        res.status(200).send({});
       }
     } catch (e) {
       console.log(e);
