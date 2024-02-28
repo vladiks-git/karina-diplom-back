@@ -4,6 +4,8 @@ import { connectDataBase, sequelize } from './db/dbConnect.js';
 import { authRouter } from './routes/auth.js';
 import { AdminService } from './service/adminService.js';
 import { adminRouter } from './routes/admin.js';
+import { counterpartyRouter } from './routes/counterparty.js';
+import { projectManagerRouter } from './routes/projectManager.js';
 
 // Инициализация приложения
 const app = express();
@@ -14,6 +16,8 @@ app.use(express.json());
 // Роуты
 app.use(authRouter);
 app.use(adminRouter);
+app.use(counterpartyRouter);
+app.use(projectManagerRouter);
 
 // DataBase
 connectDataBase();
