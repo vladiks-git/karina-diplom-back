@@ -1,7 +1,13 @@
 import { ProjectModel, TaskModel } from '../db/models.js';
+import { ProjectStatuses } from '../consts/common.js';
 
-const getProjectById = (id: number) => {
-  return ProjectModel.findAll({ where: { counterpartyId: id } });
+const getProjectsById = (id: number) => {
+  return ProjectModel.findAll({
+    where: {
+      counterpartyId: id,
+      status: ProjectStatuses.IN_WORK || ProjectStatuses.SOLVED,
+    },
+  });
 };
 
 const getTasksByProjectId = (id: number) => {
@@ -9,6 +15,6 @@ const getTasksByProjectId = (id: number) => {
 };
 
 export const CounterpartyService = {
-  getProjectById,
+  getProjectsById,
   getTasksByProjectId,
 };

@@ -6,6 +6,7 @@ import { AdminService } from './service/adminService.js';
 import { adminRouter } from './routes/admin.js';
 import { counterpartyRouter } from './routes/counterparty.js';
 import { projectManagerRouter } from './routes/projectManager.js';
+import { employerRouter } from './routes/employerRouter.js';
 
 // Инициализация приложения
 const app = express();
@@ -18,6 +19,7 @@ app.use(authRouter);
 app.use(adminRouter);
 app.use(counterpartyRouter);
 app.use(projectManagerRouter);
+app.use(employerRouter);
 
 // DataBase
 connectDataBase();

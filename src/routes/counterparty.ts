@@ -8,7 +8,7 @@ counterpartyRouter.get(
   async (req: Request<{ id: string }>, res) => {
     try {
       const id = req.params.id;
-      const currentProjects = await CounterpartyService.getProjectById(+id);
+      const currentProjects = await CounterpartyService.getProjectsById(+id);
       const body = await Promise.all(
         currentProjects.map(async (currentProject) => {
           if (currentProject.id) {
