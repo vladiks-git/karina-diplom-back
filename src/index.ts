@@ -27,9 +27,6 @@ connectDataBase();
   try {
     // await sequelize.sync({ force: true });
     await sequelize.sync();
-    // await UserService.createAdmin();
-    // await UserService.createStudent();
-    // await UserService.createResponsible();
     const hasAdmin = await AdminService.getAdmin();
     if (!hasAdmin) {
       await AdminService.createAdmin();
