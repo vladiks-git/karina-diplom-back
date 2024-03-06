@@ -24,11 +24,16 @@ const createAdmin = () => {
   });
 };
 
+const getAdmin = () => {
+  return UserModel.findOne({ where: { role: Roles.ADMIN } });
+};
+
 const getUserById = (id: number) => {
   return UserModel.findOne({ where: { id: id } });
 };
 
 export const AdminService = {
+  getAdmin,
   getAllUsers,
   createUser,
   updateUser,

@@ -30,7 +30,10 @@ connectDataBase();
     // await UserService.createAdmin();
     // await UserService.createStudent();
     // await UserService.createResponsible();
-    await AdminService.createAdmin();
+    const hasAdmin = await AdminService.getAdmin();
+    if (!hasAdmin) {
+      await AdminService.createAdmin();
+    }
     app.listen(6000);
     console.log('App listen on port - 6000');
   } catch (e) {
