@@ -1,7 +1,7 @@
 import { ProjectModel, TaskModel } from '../db/models.js';
 
 const getProjectById = (id: number) => {
-  return ProjectModel.findOne({ where: { id: id } });
+  return ProjectModel.findAll({ where: { counterpartyId: id } });
 };
 
 const getTasksByProjectId = (id: number) => {

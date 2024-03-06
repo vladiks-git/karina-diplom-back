@@ -8,14 +8,21 @@ counterpartyRouter.get(
   async (req: Request<{ id: string }>, res) => {
     try {
       const id = req.params.id;
-      const currentProject = await CounterpartyService.getProjectById(+id);
-      if (currentProject && currentProject.id) {
-        const tasksByProjectId = await CounterpartyService.getTasksByProjectId(
-          currentProject.id
-        );
-        res.status(200).send(JSON.stringify(tasksByProjectId));
-      }
-      res.status(500).send({ message: 'Ошибка на сервере' });
+      const currentProjects = await CounterpartyService.getProjectById(+id);
+      const body = await Promise.all(
+        currentProjects.map(async (currentProject) => {
+          if (currentProject.id) {
+            const tasksByProjectId =
+              await CounterpartyService.getTasksByProjectId(currentProject.id);
+            return {
+              ...currentProject.dataValues,
+              tasks: tasksByProjectId,
+            };
+          }
+        })
+      );
+
+      res.status(200).send(body);
     } catch (e) {
       console.log(e);
       res.status(500).send({ message: 'Ошибка на сервере' });

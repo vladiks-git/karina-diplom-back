@@ -89,6 +89,7 @@ export const ProjectModel = sequelize.define<IProjectModel>('Project', {
   //   type: DataTypes.ARRAY(DataTypes.INTEGER),
   // },
 });
+
 ProjectModel.hasMany(TaskModel);
 TaskModel.belongsTo(ProjectModel, {
   foreignKey: 'projectId',

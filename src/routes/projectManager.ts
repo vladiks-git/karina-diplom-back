@@ -126,7 +126,6 @@ projectManagerRouter.get(
         const tasksByProjectId =
           await ProjectManagerService.getTasksByProjectId(project.id);
         const mappedTasks = tasksByProjectId.map((task) => task.dataValues);
-        console.log(mappedTasks);
         res.status(200).send(
           JSON.stringify({
             ...project.dataValues,
